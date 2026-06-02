@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UAE PropHub — Admin Panel</title>
+<link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">UAE<span>PropHub</span></div>
+    <div class="login-sub">Admin Panel — Secure Login</div>
+    <div class="field"><label>Admin Username</label><input id="l-user" type="text" placeholder="admin@uaeprophub.com"></div>
+    <div class="field"><label>Password</label><input id="l-pass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="btn-gold" onclick="doLogin()">Login to Admin Panel</button>
+    <div class="login-err" id="login-err">❌ Invalid credentials. Please try again.</div>
+    <div class="cred-hint">
+      <div>🔑 <b>Username:</b> admin@uaeprophub.com</div>
+      <div style="margin-top:.4rem;">🔒 <b>Password:</b> UAE@2024</div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN SCREEN -->
+<div id="admin-screen">
+<div class="admin-wrap">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo">UAE<span>PropHub</span></div>
+      <div class="role">⚡ Admin Dashboard</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" onclick="showPage('dashboard',this)"><span class="icon">📊</span>Dashboard</div>
+      <div class="nav-item" onclick="showPage('projects',this)"><span class="icon">🏗️</span>Projects</div>
+      <div class="nav-item" onclick="showPage('calculators',this)"><span class="icon">🧮</span>Calculator Settings</div>
+      <div class="nav-item" onclick="showPage('fees',this)"><span class="icon">🧾</span>DLD / Fee Rates</div>
+      <div class="nav-item" onclick="showPage('areas',this)"><span class="icon">📍</span>Area Appreciation</div>
+      <div class="nav-item" onclick="showPage('account',this)"><span class="icon">👤</span>Account</div>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="doLogout()">🚪 Logout</button>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+
+    <!-- DASHBOARD PAGE -->
+    <div class="page active" id="page-dashboard">
+      <div class="topbar">
+        <h1>Admin <span>Dashboard</span></h1>
+        <div class="topbar-right">
+          <span class="badge badge-green">● Live</span>
+          <span class="badge badge-gold" id="admin-name-badge">admin@uaeprophub.com</span>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="s-val" id="dash-projects">9</div><div class="s-label">Total Projects</div></div>
+        <div class="stat-card"><div class="s-val" id="dash-dubai">6</div><div class="s-label">Dubai Projects</div></div>
+        <div class="stat-card"><div class="s-val" id="dash-ad">3</div><div class="s-label">Abu Dhabi Projects</div></div>
+        <div class="stat-card"><div class="s-val">4%</div><div class="s-label">DLD Fee Rate</div></div>
+        <div class="stat-card"><div class="s-val" id="dash-avgROI">—</div><div class="s-label">Avg Project ROI</div></div>
+      </div>
+      <div class="table-card">
+        <div class="table-header">
+          <h3>Recent Projects</h3>
+          <button class="btn-sm btn-add" onclick="showPage('projects',document.querySelector('[onclick*=projects]'))">+ Add Project</button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table id="dash-table">
+            <thead><tr><th>Project</th><th>Developer</th><th>City</th><th>ROI</th><th>Price From</th><th>Status</th></tr></thead>
+            <tbody id="dash-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECTS PAGE -->
+    <div class="page" id="page-projects">
+      <div class="topbar">
+        <h1>Manage <span>Projects</span></h1>
+        <button class="btn-sm btn-add" onclick="openModal()">+ Add New Project</button>
+      </div>
+      <div class="table-card">
+        <div class="table-header"><h3>All Projects</h3><span id="proj-count" class="badge badge-gold"></span></div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead><tr><th>#</th><th>Project Name</th><th>Developer</th><th>City</th><th>Location</th><th>Price From</th><th>ROI</th><th>Payment Plan</th><th>Handover</th><th>Actions</th></tr></thead>
+            <tbody id="proj-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- CALCULATOR SETTINGS PAGE -->
+    <div class="page" id="page-calculators">
+      <div class="topbar"><h1>Calculator <span>Settings</span></h1></div>
+      <div class="settings-grid">
+        <div class="settings-card">
+          <h3>📈 ROI Calculator Defaults</h3>
+          <div class="setting-row"><label>Default Property Price (AED)</label><input id="s-roi-price" type="number" value="1500000"></div>
+          <div class="setting-row"><label>Default Annual Rent (AED)</label><input id="s-roi-rent" type="number" value="90000"></div>
+          <div class="setting-row"><label>Default Service Charges (AED)</label><input id="s-roi-service" type="number" value="15000"></div>
+          <div class="setting-row"><label>Default Vacancy Rate (%)</label><input id="s-roi-vacancy" type="number" value="5"></div>
+          <div class="setting-row"><label>Default Maintenance (AED)</label><input id="s-roi-maint" type="number" value="5000"></div>
+          <button class="save-settings-btn" onclick="saveCalcSettings('roi')">💾 Save ROI Defaults</button>
+        </div>
+        <div class="settings-card">
+          <h3>🏦 Mortgage Calculator Defaults</h3>
+          <div class="setting-row"><label>Default Property Value (AED)</label><input id="s-m-value" type="number" value="2000000"></div>
+          <div class="setting-row"><label>Default Down Payment (%)</label><input id="s-m-down" type="number" value="20"></div>
+          <div class="setting-row"><label>Default Interest Rate (%)</label><input id="s-m-rate" type="number" value="4.5" step="0.1"></div>
+          <div class="setting-row"><label>Default Tenure (Years)</label><input id="s-m-tenure" type="number" value="25"></div>
+          <div class="setting-row"><label>UAE National Max LTV (%)</label><input id="s-m-ltv-uae" type="number" value="80"></div>
+          <div class="setting-row"><label>Expat Max LTV (%)</label><input id="s-m-ltv-exp" type="number" value="75"></div>
+          <div class="setting-row"><label>Non-Resident Max LTV (%)</label><input id="s-m-ltv-nr" type="number" value="50"></div>
+          <button class="save-settings-btn" onclick="saveCalcSettings('mortgage')">💾 Save Mortgage Defaults</button>
+        </div>
+        <div class="settings-card">
+          <h3>📊 Appreciation Calculator</h3>
+          <div class="setting-row"><label>Default Purchase Price (AED)</label><input id="s-ca-price" type="number" value="1500000"></div>
+          <div class="setting-row"><label>Default Horizon (Years)</label><input id="s-ca-years" type="number" value="10"></div>
+          <div class="setting-row"><label>Default Annual Rent (AED)</label><input id="s-ca-rent" type="number" value="90000"></div>
+          <button class="save-settings-btn" onclick="saveCalcSettings('appreciation')">💾 Save Defaults</button>
+        </div>
+        <div class="settings-card">
+          <h3>💳 Payment Plan Options</h3>
+          <div style="font-size:.8rem;color:var(--muted);margin-bottom:1rem;">Available plans shown in calculator dropdown</div>
+          <div id="plan-list"></div>
+          <div style="display:flex;gap:.5rem;margin-top:.8rem;">
+            <input id="new-plan-label" placeholder="e.g. 25/75" style="flex:1;background:var(--dark3);border:1px solid var(--border);color:var(--text);padding:8px 10px;border-radius:7px;font-size:.83rem;outline:none;">
+            <button class="btn-sm btn-add" onclick="addPlan()">+ Add</button>
+          </div>
+          <button class="save-settings-btn" onclick="savePlans()">💾 Save Plans</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DLD / FEES PAGE -->
+    <div class="page" id="page-fees">
+      <div class="topbar"><h1>DLD & <span>Fee Rates</span></h1></div>
+      <div class="settings-grid">
+        <div class="settings-card">
+          <h3>🏙️ Dubai Fee Rates</h3>
+          <div class="setting-row"><label>DLD Transfer Fee (%)</label><input id="f-dxb-transfer" type="number" value="4" step="0.1"></div>
+          <div class="setting-row"><label>Trustee Office Fee (AED)</label><input id="f-dxb-admin" type="number" value="4200"></div>
+          <div class="setting-row"><label>Title Deed Fee (AED)</label><input id="f-dxb-title" type="number" value="580"></div>
+          <div class="setting-row"><label>Agent Commission (%)</label><input id="f-dxb-agent" type="number" value="2" step="0.5"></div>
+          <div class="setting-row"><label>Mortgage Registration (%)</label><input id="f-dxb-mort" type="number" value="0.25" step="0.05"></div>
+          <button class="save-settings-btn" onclick="saveFees('dubai')">💾 Save Dubai Fees</button>
+        </div>
+        <div class="settings-card">
+          <h3>🕌 Abu Dhabi Fee Rates</h3>
+          <div class="setting-row"><label>ADM Transfer Fee (%)</label><input id="f-ad-transfer" type="number" value="2" step="0.1"></div>
+          <div class="setting-row"><label>ADM Admin Fee (AED)</label><input id="f-ad-admin" type="number" value="3000"></div>
+          <div class="setting-row"><label>Title Deed Fee (AED)</label><input id="f-ad-title" type="number" value="500"></div>
+          <div class="setting-row"><label>Agent Commission (%)</label><input id="f-ad-agent" type="number" value="2" step="0.5"></div>
+          <div class="setting-row"><label>Mortgage Registration (%)</label><input id="f-ad-mort" type="number" value="0.1" step="0.05"></div>
+          <button class="save-settings-btn" onclick="saveFees('abudhabi')">💾 Save Abu Dhabi Fees</button>
+        </div>
+        <div class="settings-card">
+          <h3>📋 Other Charges</h3>
+          <div class="setting-row"><label>Property Valuation Fee (AED)</label><input id="f-val" type="number" value="3500"></div>
+          <div class="setting-row"><label>NOC Fee (AED)</label><input id="f-noc" type="number" value="1000"></div>
+          <div class="setting-row"><label>RERA Registration (AED)</label><input id="f-rera" type="number" value="2000"></div>
+          <button class="save-settings-btn" onclick="saveFees('other')">💾 Save Other Fees</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- AREA APPRECIATION PAGE -->
+    <div class="page" id="page-areas">
+      <div class="topbar">
+        <h1>Area <span>Appreciation Rates</span></h1>
+        <button class="btn-sm btn-add" onclick="addAreaRow()">+ Add Area</button>
+      </div>
+      <div class="table-card">
+        <div class="table-header"><h3>Annual Appreciation Rates (%)</h3></div>
+        <div style="overflow-x:auto;">
+          <table><thead><tr><th>Area / Community</th><th>City</th><th>Annual Rate (%)</th><th>Action</th></tr></thead>
+          <tbody id="areas-tbody"></tbody></table>
+        </div>
+        <div style="padding:1.2rem 1.5rem;border-top:1px solid var(--border);">
+          <button class="save-settings-btn" onclick="saveAreas()">💾 Save All Area Rates</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACCOUNT PAGE -->
+    <div class="page" id="page-account">
+      <div class="topbar"><h1>Account <span>Settings</span></h1></div>
+      <div class="settings-grid">
+        <div class="pwd-card">
+          <h3>🔐 Change Password</h3>
+          <div class="field" style="margin-bottom:1rem;"><label>Current Username</label><input id="acc-user" type="text" value="admin@uaeprophub.com"></div>
+          <div class="field" style="margin-bottom:1rem;"><label>Current Password</label><input id="acc-cur" type="password" placeholder="Current password"></div>
+          <div class="field" style="margin-bottom:1rem;"><label>New Password</label><input id="acc-new" type="password" placeholder="New password"></div>
+          <div class="field" style="margin-bottom:1.2rem;"><label>Confirm New Password</label><input id="acc-confirm" type="password" placeholder="Confirm password"></div>
+          <button class="save-settings-btn" onclick="changePassword()">🔒 Update Credentials</button>
+          <div id="pwd-msg" style="font-size:.82rem;margin-top:.7rem;"></div>
+        </div>
+        <div class="settings-card" style="max-width:320px;">
+          <h3>ℹ️ Admin Info</h3>
+          <div style="font-size:.85rem;line-height:1.9;">
+            <div style="color:var(--muted);">Username</div>
+            <div id="acc-display-user" style="color:var(--gold);font-weight:700;margin-bottom:.5rem;">admin@uaeprophub.com</div>
+            <div style="color:var(--muted);">Role</div>
+            <div style="color:var(--text);font-weight:600;margin-bottom:.5rem;">Super Admin</div>
+            <div style="color:var(--muted);">Last Login</div>
+            <div id="last-login" style="color:var(--text);font-weight:600;">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div>
+</div><!-- /admin-screen -->
+
+<!-- PROJECT MODAL -->
+<div class="modal-bg" id="proj-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modal-title">Add New Project</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit-idx" value="-1">
+      <div class="form-grid">
+        <div class="field"><label>Project Name *</label><input id="f-name" type="text" placeholder="e.g. Emaar Beach Vista"></div>
+        <div class="field"><label>Developer *</label><input id="f-dev" type="text" placeholder="e.g. Emaar Properties"></div>
+        <div class="field"><label>Location / Community</label><input id="f-loc" type="text" placeholder="e.g. Dubai Marina, Dubai"></div>
+        <div class="field"><label>City *</label>
+          <select id="f-city"><option value="dubai">🏙️ Dubai</option><option value="abudhabi">🕌 Abu Dhabi</option></select>
+        </div>
+        <div class="field"><label>Price From (AED)</label><input id="f-price" type="text" placeholder="e.g. From AED 1.5M"></div>
+        <div class="field"><label>Estimated ROI (%)</label><input id="f-roi" type="text" placeholder="e.g. 7.2%"></div>
+        <div class="field"><label>Payment Plan</label><input id="f-plan" type="text" placeholder="e.g. 30/70 or 1% Monthly"></div>
+        <div class="field"><label>Handover Date</label><input id="f-handover" type="text" placeholder="e.g. Q4 2026"></div>
+        <div class="field"><label>Property Type</label><input id="f-type" type="text" placeholder="e.g. Apartment, Villa"></div>
+        <div class="field"><label>Status Badge</label><input id="f-badge" type="text" placeholder="e.g. Off-Plan, Ready"></div>
+        <div class="field"><label>Emoji Icon</label><input id="f-emoji" type="text" placeholder="e.g. 🏖️" maxlength="4"></div>
+        <div class="field"><label>Card BG Color</label><input id="f-bg" type="color" value="#0d1f2d" style="height:40px;cursor:pointer;"></div>
+      </div>
+      <div class="field" style="margin-top:1rem;"><label>Description (optional)</label><textarea id="f-desc" placeholder="Brief description of the project..."></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-sm btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-sm btn-save" onclick="saveProject()">💾 Save Project</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="assets/js/admin.js"></script>
+</body>
+</html>

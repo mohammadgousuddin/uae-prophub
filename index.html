@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UAE Real Estate Hub</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">UAE<span>PropHub</span></div>
+  <div class="nav-links">
+    <a href="#calculators">Calculators</a>
+    <a href="#projects">Projects</a>
+    <a href="#fees">DLD Fees</a>
+  </div>
+  <div class="city-badge">🇦🇪 UAE</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Dubai & Abu Dhabi Real Estate</div>
+    <h1>Smart <span class="gold">Property</span> Calculations<br>for the UAE Market</h1>
+    <p>ROI, payment plans, mortgage, DLD fees, rental yield — everything you need to make informed property decisions in Dubai & Abu Dhabi.</p>
+    <div class="hero-btns">
+      <button class="btn-gold" onclick="document.getElementById('calculators').scrollIntoView({behavior:'smooth'})">Start Calculating</button>
+      <button class="btn-outline" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View Projects</button>
+    </div>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num">6–9%</div><div class="stat-label">Avg Rental Yield</div></div>
+      <div class="stat"><div class="stat-num">0%</div><div class="stat-label">Income Tax</div></div>
+      <div class="stat"><div class="stat-num">4%</div><div class="stat-label">DLD Transfer Fee</div></div>
+      <div class="stat"><div class="stat-num">10yr</div><div class="stat-label">Golden Visa</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CALCULATORS -->
+<div class="full-bg" id="calculators">
+<section>
+  <div class="sec-title">
+    <h2>Property <span class="gold">Calculators</span></h2>
+    <p>All tools in one place — tailored for Dubai & Abu Dhabi</p>
+  </div>
+  <div class="tab-bar">
+    <button class="tab active" onclick="switchTab('roi')">📈 ROI & Yield</button>
+    <button class="tab" onclick="switchTab('payment')">💳 Payment Plan</button>
+    <button class="tab" onclick="switchTab('mortgage')">🏦 Mortgage</button>
+    <button class="tab" onclick="switchTab('appreciation')">📊 Appreciation</button>
+  </div>
+
+  <!-- ROI -->
+  <div class="calc-panel active" id="panel-roi">
+    <div class="calc-grid">
+      <div class="calc-card">
+        <h3>📈 ROI & Rental Yield Calculator</h3>
+        <div class="field"><label>Property Price (AED)</label><input id="roi-price" type="number" value="1500000"></div>
+        <div class="field"><label>Annual Rent (AED)</label><input id="roi-rent" type="number" value="90000"></div>
+        <div class="field"><label>Annual Service Charges (AED)</label><input id="roi-service" type="number" value="15000"></div>
+        <div class="field"><label>Vacancy Rate (%)</label><input id="roi-vacancy" type="number" value="5" min="0" max="100"></div>
+        <div class="field"><label>Annual Maintenance (AED)</label><input id="roi-maint" type="number" value="5000"></div>
+        <button class="calc-btn" onclick="calcROI()">Calculate ROI</button>
+      </div>
+      <div class="calc-card">
+        <h3>Results</h3>
+        <div class="result-box">
+          <h4>ROI Breakdown</h4>
+          <div class="result-row"><span class="result-label">Gross Rental Yield</span><span class="result-val" id="r-gross">—</span></div>
+          <div class="result-row"><span class="result-label">Net Rental Yield</span><span class="result-val" id="r-net">—</span></div>
+          <div class="result-row"><span class="result-label">Annual Gross Income</span><span class="result-val" id="r-gross-income">—</span></div>
+          <div class="result-row"><span class="result-label">Annual Net Income</span><span class="result-val" id="r-net-income">—</span></div>
+          <div class="result-row"><span class="result-label">Monthly Net Income</span><span class="result-val" id="r-monthly">—</span></div>
+          <div class="result-row"><span class="result-label">Break-Even Years</span><span class="result-val" id="r-breakeven">—</span></div>
+          <div class="result-row"><span class="result-label">10-Year Net Return</span><span class="result-val big" id="r-10yr">—</span></div>
+        </div>
+        <div class="progress-wrap" id="yield-bar-wrap" style="display:none;margin-top:1rem;">
+          <div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-bottom:.3rem;"><span>Net Yield</span><span id="yield-bar-label"></span></div>
+          <div class="progress-bar"><div class="progress-fill" id="yield-bar" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAYMENT PLAN -->
+  <div class="calc-panel" id="panel-payment">
+    <div class="calc-grid">
+      <div class="calc-card">
+        <h3>💳 Payment Plan Calculator</h3>
+        <div class="field"><label>Property Price (AED)</label><input id="pp-price" type="number" value="2000000"></div>
+        <div class="field"><label>Payment Plan Type</label>
+          <select id="pp-plan">
+            <option value="30-70">30/70 — Pay 30% now, 70% on handover</option>
+            <option value="40-60">40/60 — Pay 40% now, 60% on handover</option>
+            <option value="50-50">50/50 — Equal split</option>
+            <option value="20-80">20/80 — Pay 20% now, 80% on handover</option>
+            <option value="60-40">60/40 — Pay 60% construction, 40% on handover</option>
+            <option value="1-99">1% Monthly — 1% per month</option>
+          </select>
+        </div>
+        <div class="field"><label>Project Start Date</label><input id="pp-start" type="month" value="2025-01"></div>
+        <div class="field"><label>Handover Date</label><input id="pp-end" type="month" value="2027-06"></div>
+        <div class="field"><label>Down Payment (%)</label><input id="pp-down" type="number" value="10" min="0" max="100"></div>
+        <button class="calc-btn" onclick="calcPayment()">Generate Payment Schedule</button>
+      </div>
+      <div class="calc-card" style="overflow-x:auto;">
+        <h3>Payment Schedule</h3>
+        <div id="pp-result"><div style="color:var(--muted);font-size:.9rem;">Click Generate to see your payment schedule</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MORTGAGE -->
+  <div class="calc-panel" id="panel-mortgage">
+    <div class="calc-grid">
+      <div class="calc-card">
+        <h3>🏦 Mortgage Calculator</h3>
+        <div class="field"><label>Property Value (AED)</label><input id="m-value" type="number" value="2000000"></div>
+        <div class="field"><label>Down Payment (%)</label><input id="m-down" type="number" value="20" min="0" max="100"></div>
+        <div class="field"><label>Annual Interest Rate (%)</label><input id="m-rate" type="number" value="4.5" step="0.1"></div>
+        <div class="field"><label>Loan Tenure (Years)</label><input id="m-tenure" type="number" value="25" min="1" max="30"></div>
+        <div class="field"><label>Resident Type</label>
+          <select id="m-resident">
+            <option value="uae">UAE National (max 80% LTV)</option>
+            <option value="expat" selected>Expat (max 75% LTV)</option>
+            <option value="nonresident">Non-Resident (max 50% LTV)</option>
+          </select>
+        </div>
+        <button class="calc-btn" onclick="calcMortgage()">Calculate Mortgage</button>
+      </div>
+      <div class="calc-card">
+        <h3>Results</h3>
+        <div class="result-box">
+          <h4>Mortgage Breakdown</h4>
+          <div class="result-row"><span class="result-label">Loan Amount</span><span class="result-val" id="m-loan">—</span></div>
+          <div class="result-row"><span class="result-label">Down Payment</span><span class="result-val" id="m-dp">—</span></div>
+          <div class="result-row"><span class="result-label">Monthly Payment</span><span class="result-val big" id="m-monthly">—</span></div>
+          <div class="result-row"><span class="result-label">Total Repayment</span><span class="result-val" id="m-total">—</span></div>
+          <div class="result-row"><span class="result-label">Total Interest</span><span class="result-val red" id="m-interest">—</span></div>
+          <div class="result-row"><span class="result-label">Loan-to-Value Ratio</span><span class="result-val" id="m-ltv">—</span></div>
+        </div>
+        <div id="m-warning" style="display:none;margin-top:.8rem;padding:.8rem;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.3);border-radius:8px;font-size:.82rem;color:#f87171;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPRECIATION -->
+  <div class="calc-panel" id="panel-appreciation">
+    <div class="calc-grid">
+      <div class="calc-card">
+        <h3>📊 Capital Appreciation Estimator</h3>
+        <div class="field"><label>Purchase Price (AED)</label><input id="ca-price" type="number" value="1500000"></div>
+        <div class="field"><label>Location / Area</label>
+          <select id="ca-area">
+            <option value="8">Dubai Marina (avg 8%/yr)</option>
+            <option value="9">Downtown Dubai (avg 9%/yr)</option>
+            <option value="7">Dubai Hills Estate (avg 7%/yr)</option>
+            <option value="10">Palm Jumeirah (avg 10%/yr)</option>
+            <option value="6">JVC (avg 6%/yr)</option>
+            <option value="8">Business Bay (avg 8%/yr)</option>
+            <option value="7">Yas Island, Abu Dhabi (avg 7%/yr)</option>
+            <option value="9">Saadiyat Island, Abu Dhabi (avg 9%/yr)</option>
+            <option value="6">Al Reem Island, Abu Dhabi (avg 6%/yr)</option>
+            <option value="7">Mohammed Bin Zayed City (avg 7%/yr)</option>
+          </select>
+        </div>
+        <div class="field"><label>Investment Horizon (Years)</label><input id="ca-years" type="number" value="10" min="1" max="30"></div>
+        <div class="field"><label>Annual Rental Income (AED)</label><input id="ca-rent" type="number" value="90000"></div>
+        <button class="calc-btn" onclick="calcAppreciation()">Project Value</button>
+      </div>
+      <div class="calc-card">
+        <h3>Results</h3>
+        <div class="result-box">
+          <h4>Appreciation Projection</h4>
+          <div class="result-row"><span class="result-label">Purchase Price</span><span class="result-val" id="ca-buy">—</span></div>
+          <div class="result-row"><span class="result-label">Projected Value</span><span class="result-val big green" id="ca-future">—</span></div>
+          <div class="result-row"><span class="result-label">Capital Gain</span><span class="result-val green" id="ca-gain">—</span></div>
+          <div class="result-row"><span class="result-label">Total Rental Income</span><span class="result-val" id="ca-totalrent">—</span></div>
+          <div class="result-row"><span class="result-label">Total Return</span><span class="result-val big" id="ca-totalreturn">—</span></div>
+          <div class="result-row"><span class="result-label">ROI %</span><span class="result-val green" id="ca-roi">—</span></div>
+        </div>
+        <div id="ca-timeline" style="margin-top:1rem;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- DLD FEES -->
+<div id="fees">
+<section>
+  <div class="sec-title">
+    <h2>DLD Fees & <span class="gold">Transaction Costs</span></h2>
+    <p>Know the full cost before you buy</p>
+  </div>
+  <div class="calc-grid">
+    <div class="calc-card">
+      <h3>🧾 Calculate All Transaction Fees</h3>
+      <div class="field"><label>Property Price (AED)</label><input id="dld-price" type="number" value="2000000"></div>
+      <div class="field"><label>Property Type</label>
+        <select id="dld-type">
+          <option value="secondary">Secondary Market (Resale)</option>
+          <option value="offplan">Off-Plan (New Developer)</option>
+        </select>
+      </div>
+      <div class="field"><label>Emirate</label>
+        <select id="dld-city">
+          <option value="dubai">Dubai</option>
+          <option value="abudhabi">Abu Dhabi</option>
+        </select>
+      </div>
+      <div class="field"><label>Include Agent Commission</label>
+        <select id="dld-agent">
+          <option value="2">Yes - 2% (Standard)</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+      <button class="calc-btn" onclick="calcDLD()">Calculate Total Cost</button>
+    </div>
+    <div class="calc-card">
+      <h3>Results</h3>
+      <div class="result-box">
+        <h4>Cost Breakdown</h4>
+        <div class="result-row"><span class="result-label">Property Price</span><span class="result-val" id="dld-r-price">—</span></div>
+        <div class="result-row"><span class="result-label">DLD Transfer Fee (4%)</span><span class="result-val" id="dld-r-transfer">—</span></div>
+        <div class="result-row"><span class="result-label">DLD Admin Fee</span><span class="result-val" id="dld-r-admin">—</span></div>
+        <div class="result-row"><span class="result-label">Title Deed Fee</span><span class="result-val" id="dld-r-title">—</span></div>
+        <div class="result-row"><span class="result-label">Agent Commission</span><span class="result-val" id="dld-r-agent">—</span></div>
+        <div class="result-row"><span class="result-label">Mortgage Registration</span><span class="result-val" id="dld-r-mortgage">0</span></div>
+        <div class="result-row" style="margin-top:.5rem;padding-top:.8rem;border-top:1px solid var(--border);">
+          <span class="result-label" style="font-weight:700;color:var(--text);">TOTAL COST</span>
+          <span class="result-val big" id="dld-r-total">—</span>
+        </div>
+        <div class="result-row"><span class="result-label">Extra Cost on Top (%)</span><span class="result-val" id="dld-r-pct">—</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- PROJECTS -->
+<div class="full-bg" id="projects">
+<section>
+  <div class="sec-title">
+    <h2>New <span class="gold">Projects</span> 2024–2026</h2>
+    <p>Off-plan & ready properties from top UAE developers</p>
+  </div>
+  <div class="city-filter">
+    <button class="city-btn active" onclick="filterProjects('all',this)">All UAE</button>
+    <button class="city-btn" onclick="filterProjects('dubai',this)">🏙️ Dubai</button>
+    <button class="city-btn" onclick="filterProjects('abudhabi',this)">🕌 Abu Dhabi</button>
+  </div>
+  <div class="projects-grid" id="projects-grid"></div>
+</section>
+</div>
+
+<footer>
+  <p style="color:var(--gold);font-weight:700;font-size:1rem;margin-bottom:.5rem;">🇦🇪 UAE PropHub</p>
+  <p>Calculations are for informational purposes only. Always consult a licensed real estate agent or financial advisor.</p>
+  <p style="margin-top:.5rem;">Data based on Dubai Land Department & Abu Dhabi Department of Municipalities and Transport guidelines.</p>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
