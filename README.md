@@ -12,4 +12,4 @@ website for Dubai and Abu Dhabi.
 - New Projects Showcase (Dubai & Abu Dhabi)
 
 ## Live Site
-https://YOUR-USERNAME.github.io/uae-prophub
+(https://github.com/mohammadgousuddin/uae-prophub)
